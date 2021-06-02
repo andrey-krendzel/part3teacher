@@ -1,0 +1,11 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = https://github.com/FullStack-HY/part3-notes-backend
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "part3-1"]
+	remote = origin
+	merge = refs/heads/part3-1
