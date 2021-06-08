@@ -9,6 +9,22 @@ app.use(cors())
 
 app.use(express.static('build'))
 
+const mongoose = require('mongoose')
+
+// DO NOT SAVE YOUR PASSWORD TO GITHUB!!
+const url =
+  'mongodb+srv://fullstack:{pwd}@cluster0.3lsoh.mongodb.net/note-app?retryWrites=true&w=majority'
+
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+
+const noteSchema = new mongoose.Schema({
+  content: String,
+  date: Date,
+  important: Boolean,
+})
+
+const Note = mongoose.model('Note', noteSchema)
+
 let notes = [
   {
     id: 1,
@@ -34,8 +50,10 @@ app.get('/', (req, res) => {
   res.send('<h1>Hello World!</h1>')
 })
 
-app.get('/api/notes', (req, res) => {
-  res.json(notes)
+app.get('/api/notes', (request, response) => {
+  Note.find({}).then(notes => {
+    response.json(notes)
+  })
 })
 
 const generateId = () => {
